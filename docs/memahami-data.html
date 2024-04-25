@@ -1,0 +1,2818 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Memahami Data &#8212; Penambangan Data Dengan Data Iris</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'memahami-data';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="#">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Penambangan Data Dengan Data Iris - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Penambangan Data Dengan Data Iris - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1 current active">
+                <a class="reference internal" href="#">
+                    Memahami Data
+                </a>
+            </li>
+        </ul>
+        
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fmemahami-data.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/memahami-data.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Memahami Data</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Memahami Data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pada-pekerjaan-ini-kami-akan-mendeskripsikan-data-iris">Pada pekerjaan ini kami akan mendeskripsikan data iris</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#inisialisasi">Inisialisasi</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menampilkan-data">Menampilkan Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ambil-data-sepal-iris-dari-mysql">Ambil data sepal iris dari MySQL</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ambil-data-petal-iris-dari-postgresql">Ambil data petal iris dari PostgreSQL</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#penggabungan-data-dari-dua-sumber-yang-berbeda">Penggabungan data dari dua sumber yang berbeda</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deskripsi-data">Deskripsi Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#penjelasan-fitur">Penjelasan fitur</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#penjelasan-class">Penjelasan class</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#percobaan-missing-value">Percobaan Missing Value</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menghapus-value-dari-baris">Menghapus value dari baris</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menampilkan-fitur-yang-memiliki-missing-value">Menampilkan fitur yang memiliki missing value</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pra-pemrosesan-data-data-preprocessing">Pra-pemrosesan Data (Data Preprocessing)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pembersihan-data-data-cleaning">Pembersihan Data (Data Cleaning)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#seleksi-fitur">Seleksi fitur</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#merubah-nama-kolom">Merubah nama kolom</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menghapus-baris-duplikat">Menghapus baris duplikat</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#penanganan-missing-value">Penanganan missing value</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deteksi-outlier">Deteksi Outlier</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#local-outlier-factor-lof">Local Outlier Factor (LOF)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#percobaan-outlier-pada-dataset">Percobaan outlier pada dataset</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#permodelan-data-data-modelling">Permodelan Data (Data Modelling)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#percobaan-klasifikasi-dengan-gaussian-naive-bayes">Percobaan Klasifikasi Dengan Gaussian Naive Bayes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-dataframe-test-dan-train">Membuat dataframe test dan train</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menampilkan-data-test">Menampilkan data test</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menampilkan-data-train">Menampilkan data train</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kalkulasi-dengan-menggunakan-python">Kalkulasi dengan menggunakan python</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kalkulasi-dengan-menggunakan-library">Kalkulasi dengan menggunakan library</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="memahami-data">
+<h1>Memahami Data<a class="headerlink" href="#memahami-data" title="Link to this heading">#</a></h1>
+<p>“Dari Wikipedia bahasa Indonesia, ensiklopedia bebas Bunga iris (Neomarica longifolia; sinonim: Trimezia longifolia)[1] adalah terna (herb) yang berkembang biak dengan menggunakan rhizome (rimpang) dan termasuk ke dalam keluarga Iridaceae.” (Kontributor dari proyek Wikimedia., 2021)</p>
+<p>Bunga iris dapat diperjualbelikan secara bebas dan dapat digunakan sebagai tanaman hias. Warna dan bentuknya menarik dan dapat ditanam dalam pot maupun di tanam langsung di tanah halaman rumah. Selain menjadi tanaman hias, tanaman ini dapat dimanfaatkan juga sebagai tanaman obat. Tanaman ini bisa digunakan untuk mengobati hepatitis, mual, sembelit, rematik, dan gusi bengkak.</p>
+<section id="pada-pekerjaan-ini-kami-akan-mendeskripsikan-data-iris">
+<h2>Pada pekerjaan ini kami akan mendeskripsikan data iris<a class="headerlink" href="#pada-pekerjaan-ini-kami-akan-mendeskripsikan-data-iris" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Deskripsi fitur</p></li>
+</ul>
+<ul class="simple">
+<li><p>Amati missing value</p></li>
+</ul>
+<ul class="simple">
+<li><p>Inputasi missing value dengan metode KNN dan Mean lalu dibandingkan</p></li>
+</ul>
+<ul class="simple">
+<li><p>Hitung akurasi dan perbandingan tiap metode</p></li>
+</ul>
+<img alt="_images/image-20240308-153538.png" src="_images/image-20240308-153538.png" />
+<section id="inisialisasi">
+<h3>Inisialisasi<a class="headerlink" href="#inisialisasi" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;pandas&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="menampilkan-data">
+<h2>Menampilkan Data<a class="headerlink" href="#menampilkan-data" title="Link to this heading">#</a></h2>
+<section id="ambil-data-sepal-iris-dari-mysql">
+<h3>Ambil data sepal iris dari MySQL<a class="headerlink" href="#ambil-data-sepal-iris-dari-mysql" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_sepal</span> <span class="o">=</span> <span class="n">_deepnote_execute_sql</span><span class="p">(</span><span class="s1">&#39;SELECT * FROM iris&#39;</span><span class="p">,</span> <span class="s1">&#39;SQL_86FFEF30_2CE7_45FB_B840_F36435E1CC93&#39;</span><span class="p">,</span> <span class="n">audit_sql_comment</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sql_cache_mode</span><span class="o">=</span><span class="s1">&#39;cache_disabled&#39;</span><span class="p">)</span>
+<span class="n">df_sepal</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Id</th>
+      <th>SepalLengthCm</th>
+      <th>SepalWidthCm</th>
+      <th>Species</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>145</th>
+      <td>146</td>
+      <td>6.7</td>
+      <td>3.0</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>146</th>
+      <td>147</td>
+      <td>6.3</td>
+      <td>2.5</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>147</th>
+      <td>148</td>
+      <td>6.5</td>
+      <td>3.0</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>148</th>
+      <td>149</td>
+      <td>6.2</td>
+      <td>3.4</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>149</th>
+      <td>150</td>
+      <td>5.9</td>
+      <td>3.0</td>
+      <td>Iris-virginica</td>
+    </tr>
+  </tbody>
+</table>
+<p>150 rows × 4 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="ambil-data-petal-iris-dari-postgresql">
+<h3>Ambil data petal iris dari PostgreSQL<a class="headerlink" href="#ambil-data-petal-iris-dari-postgresql" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_petal</span> <span class="o">=</span> <span class="n">_deepnote_execute_sql</span><span class="p">(</span><span class="s1">&#39;SELECT * FROM iris&#39;</span><span class="p">,</span> <span class="s1">&#39;SQL_843DF3DB_71CE_4E04_AB63_48BA92D27513&#39;</span><span class="p">,</span> <span class="n">audit_sql_comment</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sql_cache_mode</span><span class="o">=</span><span class="s1">&#39;cache_disabled&#39;</span><span class="p">)</span>
+<span class="n">df_petal</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Id</th>
+      <th>PetalLengthCm</th>
+      <th>PetalWidthCm</th>
+      <th>Species</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>145</th>
+      <td>146</td>
+      <td>5.2</td>
+      <td>2.3</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>146</th>
+      <td>147</td>
+      <td>5.0</td>
+      <td>1.9</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>147</th>
+      <td>148</td>
+      <td>5.2</td>
+      <td>2.0</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>148</th>
+      <td>149</td>
+      <td>5.4</td>
+      <td>2.3</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>149</th>
+      <td>150</td>
+      <td>5.1</td>
+      <td>1.8</td>
+      <td>Iris-virginica</td>
+    </tr>
+  </tbody>
+</table>
+<p>150 rows × 4 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="penggabungan-data-dari-dua-sumber-yang-berbeda">
+<h3>Penggabungan data dari dua sumber yang berbeda<a class="headerlink" href="#penggabungan-data-dari-dua-sumber-yang-berbeda" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># concat two dataframe</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_sepal</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;Species&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">df_petal</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;Id&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">join</span><span class="o">=</span><span class="s1">&#39;inner&#39;</span><span class="p">)</span>
+
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Id</th>
+      <th>SepalLengthCm</th>
+      <th>SepalWidthCm</th>
+      <th>PetalLengthCm</th>
+      <th>PetalWidthCm</th>
+      <th>Species</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>145</th>
+      <td>146</td>
+      <td>6.7</td>
+      <td>3.0</td>
+      <td>5.2</td>
+      <td>2.3</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>146</th>
+      <td>147</td>
+      <td>6.3</td>
+      <td>2.5</td>
+      <td>5.0</td>
+      <td>1.9</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>147</th>
+      <td>148</td>
+      <td>6.5</td>
+      <td>3.0</td>
+      <td>5.2</td>
+      <td>2.0</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>148</th>
+      <td>149</td>
+      <td>6.2</td>
+      <td>3.4</td>
+      <td>5.4</td>
+      <td>2.3</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>149</th>
+      <td>150</td>
+      <td>5.9</td>
+      <td>3.0</td>
+      <td>5.1</td>
+      <td>1.8</td>
+      <td>Iris-virginica</td>
+    </tr>
+  </tbody>
+</table>
+<p>150 rows × 6 columns</p>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="deskripsi-data">
+<h2>Deskripsi Data<a class="headerlink" href="#deskripsi-data" title="Link to this heading">#</a></h2>
+<section id="penjelasan-fitur">
+<h3>Penjelasan fitur<a class="headerlink" href="#penjelasan-fitur" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 150 entries, 0 to 149
+Data columns (total 6 columns):
+ #   Column         Non-Null Count  Dtype  
+---  ------         --------------  -----  
+ 0   Id             150 non-null    int64  
+ 1   SepalLengthCm  150 non-null    float64
+ 2   SepalWidthCm   150 non-null    float64
+ 3   PetalLengthCm  150 non-null    float64
+ 4   PetalWidthCm   150 non-null    float64
+ 5   Species        150 non-null    object 
+dtypes: float64(4), int64(1), object(1)
+memory usage: 7.2+ KB
+</pre></div>
+</div>
+</div>
+</div>
+<p>Berdasarkan output dari kode program diatas. kita dapat mengetahui keterangan mengenai Tipe Data dari masing masing fitur. terdapat empat fitur dan satu class. dijelaskan sebagai berikut :</p>
+<ul class="simple">
+<li><p>SepalLengthCm merupakan fitur dengan tipe data numerik yang merupakan hasil dari pengukuran panjang kelopak sepal dari bunga iris.</p></li>
+</ul>
+<ul class="simple">
+<li><p>SepalWidhtCM merupakan fitur dengan tipe data numerik yang merupakan hasil dari pengukuran lebar kelopak sepal dari dari bunga iris.</p></li>
+</ul>
+<ul class="simple">
+<li><p>PetalLengthCm merupakan fitur dengan tipe data numerik yang merupakan hasil dari pengukuran panjang kelopak petal dari bunga iris.</p></li>
+</ul>
+<ul class="simple">
+<li><p>PetalWidthCm merupakan fitur dengan tipe data numerik yang merupakan hasil pengukuran dari lebar kelopak sepal dari bunga iris.</p></li>
+</ul>
+<ul class="simple">
+<li><p>Species merupakan class dengan tipe data kategori yang merupakan klasifikasi jenis bungan iris.</p></li>
+</ul>
+</section>
+<section id="penjelasan-class">
+<h3>Penjelasan class<a class="headerlink" href="#penjelasan-class" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="s1">&#39;Species&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Species
+Iris-setosa        50
+Iris-versicolor    50
+Iris-virginica     50
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Dari kode program diatas. dapat diketahui bahwa terdapat tiga jenis bunga iris berdasarkan data yang sudah kita analisa.</p>
+</section>
+</section>
+<section id="percobaan-missing-value">
+<h2>Percobaan Missing Value<a class="headerlink" href="#percobaan-missing-value" title="Link to this heading">#</a></h2>
+<p>Pada tahapan ini akan melakukan sebuah bercobaan dengan menghapus lima value dari beberapa baris. sehingga secara tidak langsung kita melakukan sebuah simulasi menghadapi sebuah data yang memiliki missing value.</p>
+<section id="menghapus-value-dari-baris">
+<h3>Menghapus value dari baris<a class="headerlink" href="#menghapus-value-dari-baris" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">50</span><span class="p">,</span> <span class="s1">&#39;SepalLengthCm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;SepalLengthCm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">150</span><span class="p">,</span> <span class="s1">&#39;SepalLengthCm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="c1"># dua fitur pada </span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">25</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;SepalLengthCm&#39;</span><span class="p">,</span><span class="s1">&#39;PetalWidthCm&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">75</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;SepalLengthCm&#39;</span><span class="p">,</span><span class="s1">&#39;PetalWidthCm&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Id</th>
+      <th>SepalLengthCm</th>
+      <th>SepalWidthCm</th>
+      <th>PetalLengthCm</th>
+      <th>PetalWidthCm</th>
+      <th>Species</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>145</th>
+      <td>146</td>
+      <td>6.7</td>
+      <td>3.0</td>
+      <td>5.2</td>
+      <td>2.3</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>146</th>
+      <td>147</td>
+      <td>6.3</td>
+      <td>2.5</td>
+      <td>5.0</td>
+      <td>1.9</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>147</th>
+      <td>148</td>
+      <td>6.5</td>
+      <td>3.0</td>
+      <td>5.2</td>
+      <td>2.0</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>148</th>
+      <td>149</td>
+      <td>6.2</td>
+      <td>3.4</td>
+      <td>5.4</td>
+      <td>2.3</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>149</th>
+      <td>150</td>
+      <td>NaN</td>
+      <td>3.0</td>
+      <td>5.1</td>
+      <td>1.8</td>
+      <td>Iris-virginica</td>
+    </tr>
+  </tbody>
+</table>
+<p>150 rows × 6 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="menampilkan-fitur-yang-memiliki-missing-value">
+<h3>Menampilkan fitur yang memiliki missing value<a class="headerlink" href="#menampilkan-fitur-yang-memiliki-missing-value" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Id               0
+SepalLengthCm    5
+SepalWidthCm     0
+PetalLengthCm    0
+PetalWidthCm     2
+Species          0
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Dari kode diatas dapat dilihat bahwa terdapat missng value pada fitur SepalLengthCm dan PetalWidthCm. pada fitur SepalLengthCm terdapat lima baris yang memiliki missing value. dan pada fitur PetalWidthCm terdapat dua baris yang memiliki missing value</p>
+</section>
+</section>
+</section>
+<section id="pra-pemrosesan-data-data-preprocessing">
+<h1>Pra-pemrosesan Data (Data Preprocessing)<a class="headerlink" href="#pra-pemrosesan-data-data-preprocessing" title="Link to this heading">#</a></h1>
+<p>Data preprocessing dalam data mining sangat penting. Pada tahapan ini, akan dilakukan pengolahan data mentah (Raw data) yang nantinya akan diubah menjadi data yang  bisa diolah untuk di analisa lebih lanjut.</p>
+<p>Ada 4 tahapan untuk melakukan pra-pemrosesan data, yaitu :</p>
+<ul class="simple">
+<li><p>Pembersihan Data (Data Cleaning)</p></li>
+</ul>
+<p>Pada tahapan ini. Data mentah (Raw Data) yang diperoleh harus dilakukan seleksi dengan menghapus data yang tidak relevan, lengkap, dan tidak akurat. Hal ini berguna untuk mengurangi kesalahpahaman data.</p>
+<ul class="simple">
+<li><p>Penggabungan Data (Data Integration)</p></li>
+</ul>
+<p>Data dari sumber yang berbeda digabungkan menjadi satu dataset. karena itu, kita harus mengecek sumber-sumber data agar supaya memiliki format yang sama.</p>
+<ul class="simple">
+<li><p>Tranformasi Data (Data Tranformation)</p></li>
+</ul>
+<p>Setelah proses penggabungan data dari berbagai sumber data. Selanjutnya akan dilakukan proses tranformasi data. Hal ini dilakukan karena kemungkinan data yang diambil memiliki perbedaan format. karena itu agar memudahkan ketika diolah, Data harus disamakan formatnya.</p>
+<ul class="simple">
+<li><p>Pengurangan Data (Data Reduction)</p></li>
+</ul>
+<p>Terakhir yang dilakukan adalah mengurangi data. Maksudnya adalah mengurangi sampel data yang diambil. walupun dilakukan pengurangan sampel data, pengurangan ini tidak boleh mengubah hasil analisa data. Ada tiga cara yang dilakukan. Pertama, Mengurangi dimensi. Kedua, pengurangan jumlah data. Dan ketiga, kompresi data.</p>
+<section id="pembersihan-data-data-cleaning">
+<h2>Pembersihan Data (Data Cleaning)<a class="headerlink" href="#pembersihan-data-data-cleaning" title="Link to this heading">#</a></h2>
+<section id="seleksi-fitur">
+<h3>Seleksi fitur<a class="headerlink" href="#seleksi-fitur" title="Link to this heading">#</a></h3>
+<p>Seleksi fitur dilakukan untuk menghapus kolom / fitur yang tidak dibutuhkan. dalam kasus ini, kolom Id dihapus karena tidak dibutuhkan dalam komputasi.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;Id&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>SepalLengthCm</th>
+      <th>SepalWidthCm</th>
+      <th>PetalLengthCm</th>
+      <th>PetalWidthCm</th>
+      <th>Species</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>145</th>
+      <td>6.7</td>
+      <td>3.0</td>
+      <td>5.2</td>
+      <td>2.3</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>146</th>
+      <td>6.3</td>
+      <td>2.5</td>
+      <td>5.0</td>
+      <td>1.9</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>147</th>
+      <td>6.5</td>
+      <td>3.0</td>
+      <td>5.2</td>
+      <td>2.0</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>148</th>
+      <td>6.2</td>
+      <td>3.4</td>
+      <td>5.4</td>
+      <td>2.3</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>149</th>
+      <td>NaN</td>
+      <td>3.0</td>
+      <td>5.1</td>
+      <td>1.8</td>
+      <td>Iris-virginica</td>
+    </tr>
+  </tbody>
+</table>
+<p>150 rows × 5 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="merubah-nama-kolom">
+<h3>Merubah nama kolom<a class="headerlink" href="#merubah-nama-kolom" title="Link to this heading">#</a></h3>
+<p>Dataset biasanya memiliki nama kolom / fitur yang kurang manusiawi sehingga diperlukan peruahan nama agar memudahkan proses analisis.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;SepalLengthCm&#39;</span> <span class="p">:</span> <span class="s1">&#39;Sepal Length&#39;</span><span class="p">,</span> <span class="s1">&#39;SepalWidthCm&#39;</span> <span class="p">:</span> <span class="s1">&#39;Sepal Width&#39;</span><span class="p">,</span> <span class="s1">&#39;PetalLengthCm&#39;</span> <span class="p">:</span> <span class="s1">&#39;Petal Length&#39;</span><span class="p">,</span> <span class="s1">&#39;PetalWidthCm&#39;</span> <span class="p">:</span> <span class="s1">&#39;Petal Width&#39;</span><span class="p">})</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Sepal Length</th>
+      <th>Sepal Width</th>
+      <th>Petal Length</th>
+      <th>Petal Width</th>
+      <th>Species</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="menghapus-baris-duplikat">
+<h3>Menghapus baris duplikat<a class="headerlink" href="#menghapus-baris-duplikat" title="Link to this heading">#</a></h3>
+<p>Dataset yang baik adalah dataset yang memiliki jumlah data yang banyak dan beragam. Banyaknya data yang sama tidak akan membuat model memilki akurasi yang tinggi.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># cek jumlah baris dan kolom</span>
+<span class="n">df</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(150, 5)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># cek jumlah baris dan kolom yang memiliki data duplikat</span>
+<span class="n">duplicate_rows_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;number of duplicate rows : &#39;</span><span class="p">,</span> <span class="n">duplicate_rows_df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>number of duplicate rows :  (3, 5)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Dari kode program diatas, dapat diketahui bahwa terdapat tiga baris yang memilki data yang sama</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># menghapus duplikasi data</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;number of rows after drop duplicated rows&#39;</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>number of rows after drop duplicated rows (147, 5)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Berdasarkan output kode proram diatas, jumlah baris yang awalnya 150 baris menjadi 147 baris. hal ini membuktikan bahwa kita sudah berhasil menghapus baris yang memiliki data yang sama.</p>
+</section>
+<section id="penanganan-missing-value">
+<h3>Penanganan missing value<a class="headerlink" href="#penanganan-missing-value" title="Link to this heading">#</a></h3>
+<p>Data yang hilang atau kosong harus ditangani dengan serius. Hal ini akan merusak dan menganggu pemodelan dataset.Data yang hilang atau kosong berasal dari sumber data yang tidak bekerja secara benar. bisa saja dari mesin yang awalnya bekerja secara baik namun diproses pengerjaan mengalamai error. Ataupun bila data yang didapatkan dari manusisa, bisa saja data yang hilang disebabkan oleh human error atau privatisasi data.</p>
+<p>Dalam menangani missing value ada beberapa cara. umumnya bisa dengan dihapus ataupun di isi dengan metode metode tertentu. dalam kasus ini, kita akan mencoba melakukan hapus data dan mengisi data dengan metode menghitung rata-rata (mean) dan metode K Nearest Neightbour (KNN).</p>
+<p>Penanganan missing value dengan menghapus baris</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># menampilkan baris dengan missing value</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Sepal Length&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span> <span class="o">|</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Sepal Width&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span> <span class="o">|</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Petal Length&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span> <span class="o">|</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Petal Width&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Sepal Length</th>
+      <th>Sepal Width</th>
+      <th>Petal Length</th>
+      <th>Petal Width</th>
+      <th>Species</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>24</th>
+      <td>NaN</td>
+      <td>3.4</td>
+      <td>1.9</td>
+      <td>NaN</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>NaN</td>
+      <td>3.3</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>74</th>
+      <td>NaN</td>
+      <td>2.9</td>
+      <td>4.3</td>
+      <td>NaN</td>
+      <td>Iris-versicolor</td>
+    </tr>
+    <tr>
+      <th>99</th>
+      <td>NaN</td>
+      <td>2.8</td>
+      <td>4.1</td>
+      <td>1.3</td>
+      <td>Iris-versicolor</td>
+    </tr>
+    <tr>
+      <th>149</th>
+      <td>NaN</td>
+      <td>3.0</td>
+      <td>5.1</td>
+      <td>1.8</td>
+      <td>Iris-virginica</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Dalam kasus ini terdapat lima baris data yang memiliki missing value. pada baris 24 dan 74. terdapat dua kolom yang memiliki missing value. baris ini kita hapus karena kita kehilangan 2 data fitur dari 4 fitur. atau dapat dibilang kita kehilangan 50% informasi fitur pada fitur.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># menghapus baris baris dengan missing value pada kolom &#39;Petal Width&#39;</span>
+<span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Petal Width&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Sepal Length</th>
+      <th>Sepal Width</th>
+      <th>Petal Length</th>
+      <th>Petal Width</th>
+      <th>Species</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>145</th>
+      <td>6.7</td>
+      <td>3.0</td>
+      <td>5.2</td>
+      <td>2.3</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>146</th>
+      <td>6.3</td>
+      <td>2.5</td>
+      <td>5.0</td>
+      <td>1.9</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>147</th>
+      <td>6.5</td>
+      <td>3.0</td>
+      <td>5.2</td>
+      <td>2.0</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>148</th>
+      <td>6.2</td>
+      <td>3.4</td>
+      <td>5.4</td>
+      <td>2.3</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>149</th>
+      <td>NaN</td>
+      <td>3.0</td>
+      <td>5.1</td>
+      <td>1.8</td>
+      <td>Iris-virginica</td>
+    </tr>
+  </tbody>
+</table>
+<p>145 rows × 5 columns</p>
+</div></div></div>
+</div>
+<p>Pada kode diatas, kita sudah berhasil menghapus baris 24 dan 74. selanjutnya kita akan melakukan imputasi data pada baris 99 dan 149. kali ini kita kan melkukannya dengan menggunakan dua metode, yaitu metode mean atau rata-rata dan metode KNN. lalu pada proses berikutnya akan dilakukan perbandingan akurasi dari kedua metode tersebut.</p>
+<p>Penanganan missing value dengan metode nilai rata-rata (Mean)</p>
+<p>Pada langkah sebelumnya kit sudah berhasil menghapus baris, pada langkah kali ini akan dilakukan imputasi missing value dengan metode nilai rata-rata (Mean). yaitu dengan menjumlahkan seluruh baris nilai fitur dan dilakukan operasi pembagian dengan jumlah baris. maka akan ditemukan hasil rata-rata nilai fitur. adapun rumusnya sebagai berikut.</p>
+<p>$ \bar{x} = \sum_{i = 1}^{n} \frac{x_{i}}{n} $</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># membuat copy dataframe pada variabel lain</span>
+<span class="n">df_mean</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># mencari nilai mean</span>
+<span class="n">mean</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">df_mean</span><span class="p">[</span><span class="s1">&#39;Sepal Length&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;nilai mean adalah = &#39;</span><span class="p">,</span> <span class="n">mean</span><span class="p">)</span>
+
+<span class="c1"># imputasi missing value dengan mean</span>
+<span class="n">df_mean</span><span class="p">[</span><span class="s1">&#39;Sepal Length&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">df_mean</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>nilai mean adalah =  5.9
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Sepal Length</th>
+      <th>Sepal Width</th>
+      <th>Petal Length</th>
+      <th>Petal Width</th>
+      <th>Species</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>145</th>
+      <td>6.7</td>
+      <td>3.0</td>
+      <td>5.2</td>
+      <td>2.3</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>146</th>
+      <td>6.3</td>
+      <td>2.5</td>
+      <td>5.0</td>
+      <td>1.9</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>147</th>
+      <td>6.5</td>
+      <td>3.0</td>
+      <td>5.2</td>
+      <td>2.0</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>148</th>
+      <td>6.2</td>
+      <td>3.4</td>
+      <td>5.4</td>
+      <td>2.3</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>149</th>
+      <td>5.9</td>
+      <td>3.0</td>
+      <td>5.1</td>
+      <td>1.8</td>
+      <td>Iris-virginica</td>
+    </tr>
+  </tbody>
+</table>
+<p>145 rows × 5 columns</p>
+</div></div></div>
+</div>
+<p>Berdasarkan kode program diatas. kita membuat duplikasi dataframe yang nantinya untuk menyipan dataframe yang menggunakan metode mean. kemudian mencari nilai mean dan timpa atau gantikan baris yang memiliki missing value dengan nilai mean.</p>
+<p>Penanganan missing value dengan metode K Nearest Neightbour (KNN)</p>
+<p>Nearest Neightbour jika di translasikan menjad bahasa indonesia adalah tetangga terdekat. Dan  K yang dimaksud adalah jumlah tetangga tedekat. Jadi dapat di definisikan bahwa K Nearest Neightbour (KNN) merupakan metode dengan mencari jumlah tetangga terdekat dan akan dilakukan perbandingan class untuk memprediksi klasifikasi data baru. Adapun cara kerjanya bisa disimak dibawah ini.</p>
+<img alt="_images/image-20240311-005422.png" src="_images/image-20240311-005422.png" />
+<p>Cara kerja K Nearest Neightbour (KNN)</p>
+<ol class="arabic simple" start="0">
+<li><p>Look at the data (Melihat pada data)</p></li>
+</ol>
+<p>Berdasarkan pada gambar diata. node atau tiitk berwarna abu-abu merupakan data baru. data ini akan nantinya akan diklasifikasikan dengan class-class pada digram. Jika kita perhatikan, terdapat tiga node yang berbeda warna, yaitu kuning, hijau, dan jingga. Hal ini berarti terdapat tiga class dalam diagram. node yang berwarna abu-abu akan diprediksi dengan algoritma KNN untuk menentukan node ini termasuk ke dalam salah satu class.</p>
+<p>.1. Calculate distances (Kalkulasi jarak)</p>
+<p>Node baru akan dilakukan kalkulasi jarak terhadap node-node yang lain. dalam mengukur jarak bisa dilakukan dengan beberapa metode beriku :</p>
+<p>Euclidean Distance</p>
+<a class="reference internal image-reference" href="_images/image-20240311-200655.png"><img alt="_images/image-20240311-200655.png" src="_images/image-20240311-200655.png" style="width: 50%;" /></a>
+<p>Merupakan teknik yang paling populer untuk melakukan perhitungan jarak fitur dengan tipe data numerik. Untuk rumus pengukuran jarak adalah sebagai berikut ini.</p>
+<p>$ d(P,Q) = \sqrt{\sum_{i =1}^{n} (p_{i}-q_{i})^{2}}$
+$ d(P,Q) = \sqrt{(p_{1}-q_{1})^{2}} + (p_{2}-q_{2})^{2} + ….. + (p_{n}-q_{n})^{2}$</p>
+<p>Manhattan Distance</p>
+<img alt="_images/image-20240311-201408.png" src="_images/image-20240311-201408.png" />
+<p>Manhattan distance juga begitu populer selain euclidean distance. Jika kita perhatikan gambar diatas yang merupakan perbandingan antara euclidean distance dan manhattan distance. Dapat dilihat jika euclidean distance merupakan pengukuran jarak terobos antara dua titik kordinat. Sedangkan manhattan berbeda. teknik manhattan berjalan pada grid dan tidak menerobos seperti euclidean. Rumus perhitungan jarak dapat diihat berikut ini.</p>
+<p>$ d(P, Q) = (p_{i} - q{i})^2 $</p>
+<ol class="arabic simple" start="2">
+<li><p>Find neightbour (Mencari tetangga)</p></li>
+</ol>
+<p>Setelah melakukan perhitungan jarak terhadap fitur ataupun node. Kemudian akan dilakukan perankingan jarak. mulai dari yang terdekat hingga yang terjauh.</p>
+<ol class="arabic simple" start="3">
+<li><p>Vote on label (Memilih label)</p></li>
+</ol>
+<p>Selanjutnya setelah ditemukan hasil dan perankingan jarak. Akan  dilakukan penentuan fitur terdekat atau nilai K. dalam KNN nilai K boleh ditentukan berapapun atau bebas. semisal K adalah 5, maka kita akan mengambil 5 fitur atau node yang terdekat. Selanjutnya akan dilakukan penentuan class pada node baru. Misal K adalah 5. maka akan diambil 5 fitur, kemudian sebagai penetuan class untuk node baru. bisa ditentukan dengan melihat nilai class yang paling banyak muncul pada kelima data yang diambil. semisal dalam kelima data ini class yang paling banyak muncul adalah class anggrej bulan. maka nilai class dari data baru adalah anggrek bulan.</p>
+<p>Imputasi missing value dengan KNNImputer</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.impute</span> <span class="kn">import</span> <span class="n">KNNImputer</span>
+
+<span class="c1"># duplikasi dataframe</span>
+<span class="n">df_knn</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># simpan class species</span>
+<span class="n">df_species</span> <span class="o">=</span> <span class="n">df_knn</span><span class="p">[[</span><span class="s1">&#39;Species&#39;</span><span class="p">]]</span>
+
+<span class="n">list_species</span> <span class="o">=</span> <span class="n">df_species</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+<span class="c1">#hapus kolom yang tidak diperlukan</span>
+<span class="n">df_knn</span> <span class="o">=</span> <span class="n">df_knn</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;Species&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># old_value = df_knn.drop([&#39;Species&#39;], axis=1).to_numpy()</span>
+
+<span class="c1"># inisialisasi KNNImputer</span>
+<span class="n">imputer</span> <span class="o">=</span> <span class="n">KNNImputer</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># simpan kalkulasi</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">imputer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df_knn</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+<span class="c1"># gabung hasil dengan class</span>
+<span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)):</span>
+    <span class="n">result</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">list_species</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="c1"># buat dataframe</span>
+<span class="n">df_knn</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Sepal Length&#39;</span><span class="p">,</span> <span class="s1">&#39;Sepal Width&#39;</span><span class="p">,</span> <span class="s1">&#39;Petal Length&#39;</span><span class="p">,</span> <span class="s1">&#39;Petal Width&#39;</span><span class="p">,</span> <span class="s1">&#39;Species&#39;</span><span class="p">])</span>
+
+<span class="n">df_knn</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Sepal Length</th>
+      <th>Sepal Width</th>
+      <th>Petal Length</th>
+      <th>Petal Width</th>
+      <th>Species</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.100000</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.900000</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.700000</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.600000</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.000000</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>140</th>
+      <td>6.700000</td>
+      <td>3.0</td>
+      <td>5.2</td>
+      <td>2.3</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>141</th>
+      <td>6.300000</td>
+      <td>2.5</td>
+      <td>5.0</td>
+      <td>1.9</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>142</th>
+      <td>6.500000</td>
+      <td>3.0</td>
+      <td>5.2</td>
+      <td>2.0</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>143</th>
+      <td>6.200000</td>
+      <td>3.4</td>
+      <td>5.4</td>
+      <td>2.3</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>144</th>
+      <td>6.433333</td>
+      <td>3.0</td>
+      <td>5.1</td>
+      <td>1.8</td>
+      <td>Iris-virginica</td>
+    </tr>
+  </tbody>
+</table>
+<p>145 rows × 5 columns</p>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="deteksi-outlier">
+<h2>Deteksi Outlier<a class="headerlink" href="#deteksi-outlier" title="Link to this heading">#</a></h2>
+<img alt="_images/image-20240321-012752-20240320-182759.png" src="_images/image-20240321-012752-20240320-182759.png" />
+<section id="local-outlier-factor-lof">
+<h3>Local Outlier Factor (LOF)<a class="headerlink" href="#local-outlier-factor-lof" title="Link to this heading">#</a></h3>
+<p>Outlier adalah data yang abnormal, anomali, ataupun berbeda jauh dari kebanyakan data dalam sebuah dataset. Local Outlier Factor (LOF) merupakan algoritma untuk mengidentifikasi sebuah data outlier pada dataset.</p>
+<p>Sebelum belajar mengenai LOF (Local Outlier Factor) kita harus memahami konsep dibawah ini :</p>
+<ul class="simple">
+<li><p>K-distance dan K-neighbors</p></li>
+</ul>
+<ul class="simple">
+<li><p>Reachbiity Distance (RD)</p></li>
+</ul>
+<ul class="simple">
+<li><p>Local Reachbility Density (LRD)</p></li>
+</ul>
+<ul class="simple">
+<li><p>Local Outlier Factor (LOF)</p></li>
+</ul>
+<p>K-distance dan K-neighhors</p>
+<p>K-distance adalah jarak ke tetangga terdekat ke K. dan K-neighbors dapat dilambangkan $N_{k}(A)$  merupakan himpunan titik yang terletak di dalam atau daripada lingkaran berjari-jari jarak K. K-neighbors bisa lebih dari atau sama dengan K.</p>
+<img alt="_images/image-20240321-014408-20240320-184414.png" src="_images/image-20240321-014408-20240320-184414.png" />
+<p>jika k = 2, maka K-neighbors dari A adalah C, B, dan D.
+$ || N_{k}(Objek) || $ akan selalu lebih besar atau sama dengan nilai K</p>
+<p>Reachbility Density (RD)</p>
+<p>Reachbility Density merupakan nilai maksimum dari K-distance dan jarak antara $o$ dan $o’$. ukuran jarak yang digunakan dapat menggunakan metode euclidean, manhattan dan lainnya.</p>
+<p>$RD(o, o’) = max \left{K-distance(o), distance(o, o’)\right} $</p>
+<img alt="_images/image-20240321-020158.png" src="_images/image-20240321-020158.png" />
+<p>Local Reachbility Density (LRD)</p>
+<p>$LRD_{k}=\frac{1}{\sum_{o’}\in N_{k}(o) \frac{RD(o, o’)}{|| N_{k}(o) ||} }$</p>
+<p>LRD merupakan invers dari rata-rata jarak jangkauan $o$ dari tetangganya. Seberapa jauh suatu titik dari kelompok terdekarnyam maka semakin rendah nilai LRD.</p>
+<p>Local Outlier Factor (LOF)</p>
+<p>$ LOF_{k}(o) = \frac{\sum_{o’}\in N_{k} (o) LRD_{k}(o’)}{||N_{k}(A)||} \times \frac{1}{LRD_{k}(o)} $</p>
+<p>Local Outlier Factor (LOF) adalah algoritma deteksi anomali tanpa pengawasan yang digunakan untuk mengidentifikasi pencilan atau anomali dalam kumpulan data. Ini mengukur penyimpangan kepadatan lokal dari titik data sehubungan dengan tetangganya, mengidentifikasi titik-titik yang memiliki kepadatan yang sangat berbeda dibandingkan dengan tetangga sekitarnya.</p>
+<p>Contoh Perhitungan Manual</p>
+<p>Berikut ini merupakan contoh perhitungan manual menggunakan metode perhitungan jarak Euclidean.</p>
+<p>Objek :</p>
+<ul class="simple">
+<li><p>A (0, 0)</p></li>
+</ul>
+<ul class="simple">
+<li><p>B (0, 1)</p></li>
+</ul>
+<ul class="simple">
+<li><p>C (1, 1)</p></li>
+</ul>
+<ul class="simple">
+<li><p>D (3, 0)</p></li>
+</ul>
+<p>K = 2</p>
+<p>Mencari K-distance dan K-neighbors</p>
+<img alt="_images/hitung-manual-1.jpeg" src="_images/hitung-manual-1.jpeg" />
+<p>Mencari LRD dan LOF</p>
+<img alt="_images/hitung-manual-2.jpeg" src="_images/hitung-manual-2.jpeg" />
+<p>Berdasarkan perhitungan manual. dapat diketahui bahwa objek D dapat dikatakan outlier karena nilai LRD dari D lebih besar daripada keseluruhan objek yang ada.</p>
+</section>
+<section id="percobaan-outlier-pada-dataset">
+<h3>Percobaan outlier pada dataset<a class="headerlink" href="#percobaan-outlier-pada-dataset" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">LocalOutlierFactor</span>
+
+<span class="c1"># duplikasi dataframe</span>
+<span class="n">df_outlayer</span> <span class="o">=</span> <span class="n">df_knn</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">df_outlayer</span> <span class="o">=</span> <span class="n">df_outlayer</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;Species&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># ubah data untuk simulasi outlayer</span>
+<span class="n">df_outlayer</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="s1">&#39;Sepal Length&#39;</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">df_outlayer</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="s1">&#39;Sepal Length&#39;</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="n">lof</span> <span class="o">=</span> <span class="n">LocalOutlierFactor</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">predict</span> <span class="o">=</span> <span class="n">lof</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">df_outlayer</span><span class="p">)</span>
+
+<span class="n">df_outlayer</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">predict</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([10, 20, 22, 30, 34, 38, 59, 102, 105], dtype=&#39;int64&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_outlayer</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Sepal Length</th>
+      <th>Sepal Width</th>
+      <th>Petal Length</th>
+      <th>Petal Width</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.100000</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.900000</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.700000</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.600000</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.000000</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>140</th>
+      <td>6.700000</td>
+      <td>3.0</td>
+      <td>5.2</td>
+      <td>2.3</td>
+    </tr>
+    <tr>
+      <th>141</th>
+      <td>6.300000</td>
+      <td>2.5</td>
+      <td>5.0</td>
+      <td>1.9</td>
+    </tr>
+    <tr>
+      <th>142</th>
+      <td>6.500000</td>
+      <td>3.0</td>
+      <td>5.2</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>143</th>
+      <td>6.200000</td>
+      <td>3.4</td>
+      <td>5.4</td>
+      <td>2.3</td>
+    </tr>
+    <tr>
+      <th>144</th>
+      <td>6.433333</td>
+      <td>3.0</td>
+      <td>5.1</td>
+      <td>1.8</td>
+    </tr>
+  </tbody>
+</table>
+<p>145 rows × 4 columns</p>
+</div></div></div>
+</div>
+</section>
+</section>
+</section>
+<section id="permodelan-data-data-modelling">
+<h1>Permodelan Data (Data Modelling)<a class="headerlink" href="#permodelan-data-data-modelling" title="Link to this heading">#</a></h1>
+<p>Pemodelan data dalam machine learning adalah tentang bagaimana kita mempersiapkan data agar bisa digunakan untuk membangun model machine learning yang handal.  Bisa dibilang ini seperti membangun fondasi rumah sebelum kita mulai membangunnya.</p>
+<p>Gaussian Naive Bayes</p>
+<p>Gaussian Naive Bayes merupakan sebuah teknik klasifikasi yang digunakan dalam machine learning dengan menggunakan metode probability dan Distribusi Gaussian atau Distiribusi Normal. Gaussian Distribution mengasumsikan bahwa setiap feature pada data memiliki penngaruh yang independent dalam memprediksi target. Kombinasi prediksi dari seluruh parameter adalah prediksi akhir dengan probability dari target variable yang diklasifikasikan ke dalam dua kelas. Klasifikasi akhirnya adalah hasil probability yang lebih tinggi dari grup target.</p>
+<img alt="_images/image-20240424-184420.png" src="_images/image-20240424-184420.png" />
+<p>Rumus Distribusi Gaussian</p>
+<p>Distribusi normal memiliki rumus matemtika yang mendefinisikan probability sebuah observasi berada pada salah sat kelas. Formulanya adalah sebagai berikut:</p>
+<img alt="_images/image-20240425-141227.png" src="_images/image-20240425-141227.png" />
+<section id="percobaan-klasifikasi-dengan-gaussian-naive-bayes">
+<h2>Percobaan Klasifikasi Dengan Gaussian Naive Bayes<a class="headerlink" href="#percobaan-klasifikasi-dengan-gaussian-naive-bayes" title="Link to this heading">#</a></h2>
+<section id="membuat-dataframe-test-dan-train">
+<h3>Membuat dataframe test dan train<a class="headerlink" href="#membuat-dataframe-test-dan-train" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span> 
+
+<span class="n">x_train</span> <span class="o">=</span> <span class="n">df_knn</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Species&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">df_knn</span><span class="p">[</span><span class="s1">&#39;Species&#39;</span><span class="p">]</span>
+
+<span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+
+<span class="c1"># menggabungkan dataframe</span>
+<span class="n">df_trained</span> <span class="o">=</span> <span class="n">x_train</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span>
+<span class="n">df_tested</span> <span class="o">=</span> <span class="n">x_test</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span>
+
+<span class="c1">#dataframe to .csv file</span>
+<span class="n">df_trained</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;Iris_train.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">df_tested</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;Iris_test.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="menampilkan-data-test">
+<h3>Menampilkan data test<a class="headerlink" href="#menampilkan-data-test" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iris_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;Iris_test.csv&#39;</span><span class="p">)</span>
+
+<span class="n">iris_test</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Sepal Length</th>
+      <th>Sepal Width</th>
+      <th>Petal Length</th>
+      <th>Petal Width</th>
+      <th>Species</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.700000</td>
+      <td>2.8</td>
+      <td>4.5</td>
+      <td>1.3</td>
+      <td>Iris-versicolor</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.833333</td>
+      <td>3.3</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>6.900000</td>
+      <td>3.1</td>
+      <td>4.9</td>
+      <td>1.5</td>
+      <td>Iris-versicolor</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.600000</td>
+      <td>3.4</td>
+      <td>1.4</td>
+      <td>0.3</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.100000</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>7.700000</td>
+      <td>3.0</td>
+      <td>6.1</td>
+      <td>2.3</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>6.400000</td>
+      <td>2.7</td>
+      <td>5.3</td>
+      <td>1.9</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>5.200000</td>
+      <td>2.7</td>
+      <td>3.9</td>
+      <td>1.4</td>
+      <td>Iris-versicolor</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>6.200000</td>
+      <td>3.4</td>
+      <td>5.4</td>
+      <td>2.3</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>5.000000</td>
+      <td>3.0</td>
+      <td>1.6</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>6.300000</td>
+      <td>2.5</td>
+      <td>5.0</td>
+      <td>1.9</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>5.800000</td>
+      <td>2.7</td>
+      <td>5.1</td>
+      <td>1.9</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>6.500000</td>
+      <td>3.2</td>
+      <td>5.1</td>
+      <td>2.0</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>6.000000</td>
+      <td>2.2</td>
+      <td>4.0</td>
+      <td>1.0</td>
+      <td>Iris-versicolor</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>5.500000</td>
+      <td>2.4</td>
+      <td>3.8</td>
+      <td>1.1</td>
+      <td>Iris-versicolor</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>4.800000</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.1</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>4.800000</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.3</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>6.300000</td>
+      <td>2.5</td>
+      <td>4.9</td>
+      <td>1.5</td>
+      <td>Iris-versicolor</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>4.400000</td>
+      <td>3.0</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>7.200000</td>
+      <td>3.2</td>
+      <td>6.0</td>
+      <td>1.8</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>5.700000</td>
+      <td>2.6</td>
+      <td>3.5</td>
+      <td>1.0</td>
+      <td>Iris-versicolor</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>5.400000</td>
+      <td>3.9</td>
+      <td>1.7</td>
+      <td>0.4</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>5.400000</td>
+      <td>3.0</td>
+      <td>4.5</td>
+      <td>1.5</td>
+      <td>Iris-versicolor</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>4.900000</td>
+      <td>2.5</td>
+      <td>4.5</td>
+      <td>1.7</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>5.000000</td>
+      <td>2.0</td>
+      <td>3.5</td>
+      <td>1.0</td>
+      <td>Iris-versicolor</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>6.100000</td>
+      <td>2.8</td>
+      <td>4.0</td>
+      <td>1.3</td>
+      <td>Iris-versicolor</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>5.700000</td>
+      <td>4.4</td>
+      <td>1.5</td>
+      <td>0.4</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>6.800000</td>
+      <td>3.0</td>
+      <td>5.5</td>
+      <td>2.1</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>6.500000</td>
+      <td>2.8</td>
+      <td>4.6</td>
+      <td>1.5</td>
+      <td>Iris-versicolor</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="menampilkan-data-train">
+<h3>Menampilkan data train<a class="headerlink" href="#menampilkan-data-train" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iris_trained</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;Iris_train.csv&#39;</span><span class="p">)</span>
+
+<span class="n">iris_trained</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Sepal Length</th>
+      <th>Sepal Width</th>
+      <th>Petal Length</th>
+      <th>Petal Width</th>
+      <th>Species</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>6.0</td>
+      <td>2.9</td>
+      <td>4.5</td>
+      <td>1.5</td>
+      <td>Iris-versicolor</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.8</td>
+      <td>3.1</td>
+      <td>1.6</td>
+      <td>0.2</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5.1</td>
+      <td>3.8</td>
+      <td>1.5</td>
+      <td>0.3</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>6.5</td>
+      <td>3.0</td>
+      <td>5.5</td>
+      <td>1.8</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4.9</td>
+      <td>2.4</td>
+      <td>3.3</td>
+      <td>1.0</td>
+      <td>Iris-versicolor</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>111</th>
+      <td>5.1</td>
+      <td>3.3</td>
+      <td>1.7</td>
+      <td>0.5</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>112</th>
+      <td>5.0</td>
+      <td>3.5</td>
+      <td>1.6</td>
+      <td>0.6</td>
+      <td>Iris-setosa</td>
+    </tr>
+    <tr>
+      <th>113</th>
+      <td>6.9</td>
+      <td>3.1</td>
+      <td>5.4</td>
+      <td>2.1</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>114</th>
+      <td>6.7</td>
+      <td>3.3</td>
+      <td>5.7</td>
+      <td>2.1</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>115</th>
+      <td>5.1</td>
+      <td>3.8</td>
+      <td>1.9</td>
+      <td>0.4</td>
+      <td>Iris-setosa</td>
+    </tr>
+  </tbody>
+</table>
+<p>116 rows × 5 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="kalkulasi-dengan-menggunakan-python">
+<h3>Kalkulasi dengan menggunakan python<a class="headerlink" href="#kalkulasi-dengan-menggunakan-python" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">pi</span><span class="p">,</span> <span class="n">exp</span><span class="p">,</span> <span class="n">sqrt</span>
+
+<span class="c1"># fungsi distribusi gaussian</span>
+<span class="k">def</span> <span class="nf">gaussian_distribution</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">std</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span><span class="p">)</span> <span class="o">*</span> <span class="n">std</span><span class="p">))</span> <span class="o">*</span> <span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">((</span><span class="n">x</span> <span class="o">-</span> <span class="n">mean</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">std</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)))</span>
+
+<span class="c1"># fungsi naive baiyes</span>
+<span class="k">def</span> <span class="nf">naive_bayes</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">prob_values</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">mean_values</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">std_values</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+    <span class="n">probabilities</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">species</span> <span class="ow">in</span> <span class="n">prob_values</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+        <span class="n">probabilities</span><span class="p">[</span><span class="n">species</span><span class="p">]</span> <span class="o">=</span> <span class="n">prob_values</span><span class="p">[</span><span class="n">species</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sample</span><span class="p">)):</span>
+            <span class="n">probabilities</span><span class="p">[</span><span class="n">species</span><span class="p">]</span> <span class="o">*=</span> <span class="n">gaussian_distribution</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">mean_values</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">species</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> <span class="n">std_values</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">species</span><span class="p">][</span><span class="n">i</span><span class="p">])</span>
+    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">probabilities</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">probabilities</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
+
+<span class="c1"># ambil data train</span>
+<span class="n">df_trained</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;Iris_train.csv&#39;</span><span class="p">);</span>
+
+<span class="c1"># menghitung nilai probability, mean, dan standar deviasi</span>
+<span class="n">prob_values</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Species&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span> <span class="o">/</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">mean_values</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Species&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">std_values</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Species&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+
+<span class="n">df_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;Iris_test.csv&#39;</span><span class="p">)</span>
+
+<span class="n">sample</span> <span class="o">=</span> <span class="n">df_test</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">()[</span><span class="mi">0</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">prediction</span> <span class="o">=</span> <span class="n">naive_bayes</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">prob_values</span><span class="p">,</span> <span class="n">mean_values</span><span class="p">,</span> <span class="n">std_values</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The sample is predicted to be </span><span class="si">{</span><span class="n">prediction</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The sample is predicted to be Iris-versicolor
+/tmp/ipykernel_301/3865856372.py:13: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  probabilities[species] *= gaussian_distribution(sample[i], mean_values.loc[species][i], std_values.loc[species][i])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="kalkulasi-dengan-menggunakan-library">
+<h3>Kalkulasi dengan menggunakan library<a class="headerlink" href="#kalkulasi-dengan-menggunakan-library" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">GaussianNB</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span><span class="p">;</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;Iris_train.csv&#39;</span><span class="p">)</span>
+
+<span class="n">classifier</span> <span class="o">=</span> <span class="n">GaussianNB</span><span class="p">()</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Species&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Species&#39;</span><span class="p">]</span>
+
+<span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="n">df_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;Iris_test.csv&#39;</span><span class="p">)</span>
+
+<span class="n">sample</span> <span class="o">=</span> <span class="p">[</span><span class="n">df_test</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">()[</span><span class="mi">0</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+
+<span class="n">prediction</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The sample1 is predicted to be </span><span class="si">{</span><span class="n">prediction</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The sample1 is predicted to be [&#39;Iris-versicolor&#39;]
+/shared-libs/python3.9/py/lib/python3.9/site-packages/sklearn/base.py:450: UserWarning: X does not have valid feature names, but GaussianNB was fitted with feature names
+  warnings.warn(
+</pre></div>
+</div>
+</div>
+</div>
+<p>Berdasarkan dengan dua kalkulasi di atas dengan menggunakan library ataupun manual. dapat dilihat bahwasanya, hasil yang di prediksi adalah sama.</p>
+<a style='text-decoration:none;line-height:16px;display:flex;color:#5B5B62;padding:10px;justify-content:end;' href='https://deepnote.com?utm_source=created-in-deepnote-cell&projectId=1dd64262-f415-4de7-aded-3acfb4c0cee9' target="_blank">
+<img alt='Created in deepnote.com' style='display:inline;max-height:16px;margin:0px;margin-right:7.5px;' src='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iODBweCIgaGVpZ2h0PSI4MHB4IiB2aWV3Qm94PSIwIDAgODAgODAiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8IS0tIEdlbmVyYXRvcjogU2tldGNoIDU0LjEgKDc2NDkwKSAtIGh0dHBzOi8vc2tldGNoYXBwLmNvbSAtLT4KICAgIDx0aXRsZT5Hcm91cCAzPC90aXRsZT4KICAgIDxkZXNjPkNyZWF0ZWQgd2l0aCBTa2V0Y2guPC9kZXNjPgogICAgPGcgaWQ9IkxhbmRpbmciIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgICAgIDxnIGlkPSJBcnRib2FyZCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTEyMzUuMDAwMDAwLCAtNzkuMDAwMDAwKSI+CiAgICAgICAgICAgIDxnIGlkPSJHcm91cC0zIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMjM1LjAwMDAwMCwgNzkuMDAwMDAwKSI+CiAgICAgICAgICAgICAgICA8cG9seWdvbiBpZD0iUGF0aC0yMCIgZmlsbD0iIzAyNjVCNCIgcG9pbnRzPSIyLjM3NjIzNzYyIDgwIDM4LjA0NzY2NjcgODAgNTcuODIxNzgyMiA3My44MDU3NTkyIDU3LjgyMTc4MjIgMzIuNzU5MjczOSAzOS4xNDAyMjc4IDMxLjY4MzE2ODMiPjwvcG9seWdvbj4KICAgICAgICAgICAgICAgIDxwYXRoIGQ9Ik0zNS4wMDc3MTgsODAgQzQyLjkwNjIwMDcsNzYuNDU0OTM1OCA0Ny41NjQ5MTY3LDcxLjU0MjI2NzEgNDguOTgzODY2LDY1LjI2MTk5MzkgQzUxLjExMjI4OTksNTUuODQxNTg0MiA0MS42NzcxNzk1LDQ5LjIxMjIyODQgMjUuNjIzOTg0Niw0OS4yMTIyMjg0IEMyNS40ODQ5Mjg5LDQ5LjEyNjg0NDggMjkuODI2MTI5Niw0My4yODM4MjQ4IDM4LjY0NzU4NjksMzEuNjgzMTY4MyBMNzIuODcxMjg3MSwzMi41NTQ0MjUgTDY1LjI4MDk3Myw2Ny42NzYzNDIxIEw1MS4xMTIyODk5LDc3LjM3NjE0NCBMMzUuMDA3NzE4LDgwIFoiIGlkPSJQYXRoLTIyIiBmaWxsPSIjMDAyODY4Ij48L3BhdGg+CiAgICAgICAgICAgICAgICA8cGF0aCBkPSJNMCwzNy43MzA0NDA1IEwyNy4xMTQ1MzcsMC4yNTcxMTE0MzYgQzYyLjM3MTUxMjMsLTEuOTkwNzE3MDEgODAsMTAuNTAwMzkyNyA4MCwzNy43MzA0NDA1IEM4MCw2NC45NjA0ODgyIDY0Ljc3NjUwMzgsNzkuMDUwMzQxNCAzNC4zMjk1MTEzLDgwIEM0Ny4wNTUzNDg5LDc3LjU2NzA4MDggNTMuNDE4MjY3Nyw3MC4zMTM2MTAzIDUzLjQxODI2NzcsNTguMjM5NTg4NSBDNTMuNDE4MjY3Nyw0MC4xMjg1NTU3IDM2LjMwMzk1NDQsMzcuNzMwNDQwNSAyNS4yMjc0MTcsMzcuNzMwNDQwNSBDMTcuODQzMDU4NiwzNy43MzA0NDA1IDkuNDMzOTE5NjYsMzcuNzMwNDQwNSAwLDM3LjczMDQ0MDUgWiIgaWQ9IlBhdGgtMTkiIGZpbGw9IiMzNzkzRUYiPjwvcGF0aD4KICAgICAgICAgICAgPC9nPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+' > </img>
+Created in <span style='font-weight:600;margin-left:4px;'>Deepnote</span></a></section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Memahami Data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pada-pekerjaan-ini-kami-akan-mendeskripsikan-data-iris">Pada pekerjaan ini kami akan mendeskripsikan data iris</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#inisialisasi">Inisialisasi</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menampilkan-data">Menampilkan Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ambil-data-sepal-iris-dari-mysql">Ambil data sepal iris dari MySQL</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ambil-data-petal-iris-dari-postgresql">Ambil data petal iris dari PostgreSQL</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#penggabungan-data-dari-dua-sumber-yang-berbeda">Penggabungan data dari dua sumber yang berbeda</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deskripsi-data">Deskripsi Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#penjelasan-fitur">Penjelasan fitur</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#penjelasan-class">Penjelasan class</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#percobaan-missing-value">Percobaan Missing Value</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menghapus-value-dari-baris">Menghapus value dari baris</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menampilkan-fitur-yang-memiliki-missing-value">Menampilkan fitur yang memiliki missing value</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pra-pemrosesan-data-data-preprocessing">Pra-pemrosesan Data (Data Preprocessing)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pembersihan-data-data-cleaning">Pembersihan Data (Data Cleaning)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#seleksi-fitur">Seleksi fitur</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#merubah-nama-kolom">Merubah nama kolom</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menghapus-baris-duplikat">Menghapus baris duplikat</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#penanganan-missing-value">Penanganan missing value</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deteksi-outlier">Deteksi Outlier</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#local-outlier-factor-lof">Local Outlier Factor (LOF)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#percobaan-outlier-pada-dataset">Percobaan outlier pada dataset</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#permodelan-data-data-modelling">Permodelan Data (Data Modelling)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#percobaan-klasifikasi-dengan-gaussian-naive-bayes">Percobaan Klasifikasi Dengan Gaussian Naive Bayes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-dataframe-test-dan-train">Membuat dataframe test dan train</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menampilkan-data-test">Menampilkan data test</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menampilkan-data-train">Menampilkan data train</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kalkulasi-dengan-menggunakan-python">Kalkulasi dengan menggunakan python</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kalkulasi-dengan-menggunakan-library">Kalkulasi dengan menggunakan library</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Wahyu Cahyanto Bayu Agung
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
